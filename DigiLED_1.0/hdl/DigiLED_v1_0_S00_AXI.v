@@ -84,7 +84,7 @@ module DigiLED_v1_0_S00_AXI #(
 
 	//my registers
 	reg [31:0] temp_reg;
-	reg [0:31]led_data[0:NUMBER_OF_LEDS-1];
+    reg [0:31]led_data[0:NUMBER_OF_LEDS-1];
 
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -217,11 +217,13 @@ module DigiLED_v1_0_S00_AXI #(
 					end 
 				end
 
+            //not using slave registers 1-3
+/*
 			 	else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 1)begin
 					for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							// Respective byte enables are asserted as per write strobes 
-							// Slave register 0
+							// Slave register 1
 							slv_reg1[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 					end 
 				end
@@ -230,26 +232,25 @@ module DigiLED_v1_0_S00_AXI #(
 					for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							// Respective byte enables are asserted as per write strobes 
-							// Slave register 0
+							// Slave register 2
 							slv_reg2[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 					end 
 				end
 
 			 	else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 3)begin
-			 		/*for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+			 		for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							// Respective byte enables are asserted as per write strobes 
 							// Slave register 0
 							slv_reg3[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-					end */
+					end
 				end
+*/
 
 				else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] < (axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] +(4*NUMBER_OF_LEDS))) begin
 					for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 							// Respective byte enables are asserted as per write strobes 
-							// LED_ram
-							//slv_reg0[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 							temp_reg[(byte_index*8) +: 8] = S_AXI_WDATA[(byte_index*8) +: 8];
 						end 
 
@@ -267,56 +268,6 @@ module DigiLED_v1_0_S00_AXI #(
 					slv_reg2 <= slv_reg2;
 					slv_reg3 <= slv_reg3;
 				end
-
-/*
-//				case ( axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
-					for
-
-
-
-					2'h0:
-						for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-							if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-								// Respective byte enables are asserted as per write strobes 
-								// Slave register 0
-								slv_reg0[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-						end  
-	
-					2'h1:
-						for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-							if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-								// Respective byte enables are asserted as per write strobes 
-								// Slave register 1
-								slv_reg1[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-							end  
-
-					2'h2:
-						for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-							if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-								// Respective byte enables are asserted as per write strobes 
-								// Slave register 2
-								slv_reg2[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-							end  
-
-					//read only - status register
-					2'h3: begin 
-						
-						for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-							if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-								// Respective byte enables are asserted as per write strobes 
-								// Slave register 3
-								slv_reg3[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-							end 
-						
-					end 
-						slv_reg0 <= slv_reg0;
-						slv_reg1 <= slv_reg1;
-						slv_reg2 <= slv_reg2;
-						slv_reg3 <= slv_reg3;
-					end
-
-				endcase
-*/
 			end
 		end
 	end    
