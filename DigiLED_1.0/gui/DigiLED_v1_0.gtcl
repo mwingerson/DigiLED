@@ -1,69 +1,7 @@
 # This file is automatically written.  Do not modify.
 proc gen_HDLPARAMETER_RST_POLARITY_VALUE {RST_POLARITY } {expr { ( $RST_POLARITY eq "ACTIVE_HIGH" ) ? 1 : 0}}
-proc gen_USERPARAMETER_C_S00_AXI_ADDR_WIDTH_VALUE {NUMBER_OF_LEDS } {
-if { $NUMBER_OF_LEDS <= 1} {
-    set C_S00_AXI_ADDR_WIDTH 3   
-} elseif { $NUMBER_OF_LEDS <= 3} {      
-    set C_S00_AXI_ADDR_WIDTH 4    
-} elseif { $NUMBER_OF_LEDS <= 7} {      
-    set C_S00_AXI_ADDR_WIDTH 5    
-} elseif { $NUMBER_OF_LEDS <= 15} {      
-    set C_S00_AXI_ADDR_WIDTH 6    
-} elseif { $NUMBER_OF_LEDS <= 31} {      
-    set C_S00_AXI_ADDR_WIDTH 7    
-} elseif { $NUMBER_OF_LEDS <= 63} {      
-    set C_S00_AXI_ADDR_WIDTH 8   
-} elseif { $NUMBER_OF_LEDS <= 127} {      
-    set C_S00_AXI_ADDR_WIDTH 9    
-} elseif { $NUMBER_OF_LEDS <= 255} {      
-    set C_S00_AXI_ADDR_WIDTH 10    
-} elseif { $NUMBER_OF_LEDS <= 511} {      
-    set C_S00_AXI_ADDR_WIDTH 11  
-} elseif { $NUMBER_OF_LEDS <= 1023} {      
-    set C_S00_AXI_ADDR_WIDTH 12  
-} elseif { $NUMBER_OF_LEDS <= 2047} {      
-    set C_S00_AXI_ADDR_WIDTH 13  
-} elseif { $NUMBER_OF_LEDS <= 4095} {      
-    set C_S00_AXI_ADDR_WIDTH 14  
-} elseif { $NUMBER_OF_LEDS <= 8191} {      
-    set C_S00_AXI_ADDR_WIDTH 15  
-} elseif { $NUMBER_OF_LEDS <= 16383} {      
-    set C_S00_AXI_ADDR_WIDTH 16  
-} elseif { $NUMBER_OF_LEDS <= 32767} {      
-    set C_S00_AXI_ADDR_WIDTH 17  
-} elseif { $NUMBER_OF_LEDS <= 65535} {      
-    set C_S00_AXI_ADDR_WIDTH 18  
-} elseif { $NUMBER_OF_LEDS <= 131071} {      
-    set C_S00_AXI_ADDR_WIDTH 19  
-} elseif { $NUMBER_OF_LEDS <= 262143} {      
-    set C_S00_AXI_ADDR_WIDTH 20  
-} elseif { $NUMBER_OF_LEDS <= 524287} {      
-    set C_S00_AXI_ADDR_WIDTH 21  
-} elseif { $NUMBER_OF_LEDS <= 1048575} {      
-    set C_S00_AXI_ADDR_WIDTH 22  
-} elseif { $NUMBER_OF_LEDS <= 2097151} {      
-    set C_S00_AXI_ADDR_WIDTH 23  
-} elseif { $NUMBER_OF_LEDS <= 4194303} {      
-    set C_S00_AXI_ADDR_WIDTH 24  
-} elseif { $NUMBER_OF_LEDS <= 8388607} {      
-    set C_S00_AXI_ADDR_WIDTH 25  
-} elseif { $NUMBER_OF_LEDS <= 16777215} {      
-    set C_S00_AXI_ADDR_WIDTH 26  
-} elseif { $NUMBER_OF_LEDS <= 33554431} {      
-    set C_S00_AXI_ADDR_WIDTH 27  
-} elseif { $NUMBER_OF_LEDS <= 67108863} {      
-    set C_S00_AXI_ADDR_WIDTH 28  
-} elseif { $NUMBER_OF_LEDS <= 134217727} {      
-    set C_S00_AXI_ADDR_WIDTH 29  
-} elseif { $NUMBER_OF_LEDS <= 268435455} {      
-    set C_S00_AXI_ADDR_WIDTH 30  
-} elseif { $NUMBER_OF_LEDS <= 536870911} {      
-    set C_S00_AXI_ADDR_WIDTH 31  
-} elseif { $NUMBER_OF_LEDS <= 1073741823} {      
-    set C_S00_AXI_ADDR_WIDTH 32  
-} else {                
-    set C_S00_AXI_ADDR_WIDTH 0    
-}}
+proc gen_USERPARAMETER_C_S00_AXI_ADDR_WIDTH_VALUE {NUMBER_OF_LEDS } {
+if { $NUMBER_OF_LEDS <= 1} { set C_S00_AXI_ADDR_WIDTH 3 } elseif { $NUMBER_OF_LEDS <= 3} { set C_S00_AXI_ADDR_WIDTH 4 } elseif { $NUMBER_OF_LEDS <= 7} { set C_S00_AXI_ADDR_WIDTH 5 } elseif { $NUMBER_OF_LEDS <= 15} { set C_S00_AXI_ADDR_WIDTH 6 } elseif { $NUMBER_OF_LEDS <= 31} { set C_S00_AXI_ADDR_WIDTH 7 } elseif { $NUMBER_OF_LEDS <= 63} { set C_S00_AXI_ADDR_WIDTH 8 } elseif { $NUMBER_OF_LEDS <= 127} { set C_S00_AXI_ADDR_WIDTH 9 } elseif { $NUMBER_OF_LEDS <= 255} { set C_S00_AXI_ADDR_WIDTH 10 } elseif { $NUMBER_OF_LEDS <= 511} { set C_S00_AXI_ADDR_WIDTH 11 } elseif { $NUMBER_OF_LEDS <= 1023} { set C_S00_AXI_ADDR_WIDTH 12 } elseif { $NUMBER_OF_LEDS <= 2047} { set C_S00_AXI_ADDR_WIDTH 13 } elseif { $NUMBER_OF_LEDS <= 4095} { set C_S00_AXI_ADDR_WIDTH 14 } elseif { $NUMBER_OF_LEDS <= 8191} { set C_S00_AXI_ADDR_WIDTH 15 } elseif { $NUMBER_OF_LEDS <= 16383} { set C_S00_AXI_ADDR_WIDTH 16 } elseif { $NUMBER_OF_LEDS <= 32767} { set C_S00_AXI_ADDR_WIDTH 17 } elseif { $NUMBER_OF_LEDS <= 65535} { set C_S00_AXI_ADDR_WIDTH 18 } elseif { $NUMBER_OF_LEDS <= 131071} { set C_S00_AXI_ADDR_WIDTH 19 } elseif { $NUMBER_OF_LEDS <= 262143} { set C_S00_AXI_ADDR_WIDTH 20 } elseif { $NUMBER_OF_LEDS <= 524287} { set C_S00_AXI_ADDR_WIDTH 21 } elseif { $NUMBER_OF_LEDS <= 1048575} { set C_S00_AXI_ADDR_WIDTH 22 } elseif { $NUMBER_OF_LEDS <= 2097151} { set C_S00_AXI_ADDR_WIDTH 23 } elseif { $NUMBER_OF_LEDS <= 4194303} { set C_S00_AXI_ADDR_WIDTH 24 } elseif { $NUMBER_OF_LEDS <= 8388607} { set C_S00_AXI_ADDR_WIDTH 25 } elseif { $NUMBER_OF_LEDS <= 16777215} { set C_S00_AXI_ADDR_WIDTH 26 } elseif { $NUMBER_OF_LEDS <= 33554431} { set C_S00_AXI_ADDR_WIDTH 27 } elseif { $NUMBER_OF_LEDS <= 67108863} { set C_S00_AXI_ADDR_WIDTH 28 } elseif { $NUMBER_OF_LEDS <= 134217727} { set C_S00_AXI_ADDR_WIDTH 29 } elseif { $NUMBER_OF_LEDS <= 268435455} { set C_S00_AXI_ADDR_WIDTH 30 } else { set C_S00_AXI_ADDR_WIDTH 0 }}
 proc gen_HDLPARAMETER_RESET_POLARITY_VALUE {RESET_POLARITY } {expr { ( $RESET_POLARITY eq "ACTIVE_HIGH" ) ? 1 : 0}}
 proc gen_HDLPARAMETER_TOTAL_PERIOD_VALUE {PULSE_PERIOD RST_PERIOD } {expr {  ( $PULSE_PERIOD > 0 ) ? [expr $PULSE_PERIOD - $RST_PERIOD] : 0 }}
 proc gen_USERPARAMETER_RESET_POLARITY_ENABLEMENT {CLOCK_TYPE } {expr { $CLOCK_TYPE eq "Single_Ended"} }

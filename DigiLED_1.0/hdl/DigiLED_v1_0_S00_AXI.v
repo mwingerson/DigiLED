@@ -86,6 +86,13 @@ module DigiLED_v1_0_S00_AXI #(
 	reg [31:0] temp_reg;
     reg [0:31]led_data[0:NUMBER_OF_LEDS-1];
 
+    integer i = 0;
+
+    initial begin
+        for(i=0; i<NUMBER_OF_LEDS; i=i+1)
+            led_data[i] = 0;
+    end
+
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
 	reg  	axi_awready;
@@ -218,51 +225,17 @@ module DigiLED_v1_0_S00_AXI #(
 				end
 
             //not using slave registers 1-3
-/*
-			 	else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 1)begin
-					for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-							// Respective byte enables are asserted as per write strobes 
-							// Slave register 1
-							slv_reg1[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-					end 
-				end
-			 	
-			 	else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 2)begin
-					for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-							// Respective byte enables are asserted as per write strobes 
-							// Slave register 2
-							slv_reg2[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-					end 
-				end
 
-			 	else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 3)begin
-			 		for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-							// Respective byte enables are asserted as per write strobes 
-							// Slave register 0
-							slv_reg3[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-					end
-				end
-*/
-
-				else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] < (axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] +(4*NUMBER_OF_LEDS))) begin
-					for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-						if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-							// Respective byte enables are asserted as per write strobes 
-							temp_reg[(byte_index*8) +: 8] = S_AXI_WDATA[(byte_index*8) +: 8];
-						end 
-
-					led_data[axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] - 4] = temp_reg;
-				
+				else if(axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] < (NUMBER_OF_LEDS+4)) begin
+                    led_data[axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] - 1] = S_AXI_WDATA;
+                                    
 					slv_reg0 <= slv_reg0;
 					slv_reg1 <= slv_reg1;
 					slv_reg2 <= slv_reg2;
 					slv_reg3 <= slv_reg3;
 				end
 
-				else begin	//error state!
+				else begin	//invalid address!
 					slv_reg0 <= slv_reg0;
 					slv_reg1 <= slv_reg1;
 					slv_reg2 <= slv_reg2;
@@ -383,7 +356,6 @@ module DigiLED_v1_0_S00_AXI #(
 
 	// Add user logic here
 
-
 //COLOR_MODE
 generate 
 if(COLOR_MODE == "RGB") begin
@@ -414,10 +386,11 @@ else begin		//COLOR_MODE == "HSV"
 	wire [23:0] hsv_color_out;
 	wire read_data_flag;
 
-	always@ (posedge S_AXI_ACLK)
-		if(read_data_flag)
+	always@ (posedge S_AXI_ACLK) begin
+	   if(read_data_flag)
 			preconvert_reg <= led_data[led_index];
-
+    end
+    
 	    HSV_to_RGB HSV_convert(
 	        .hsv_data_in(preconvert_reg),      
 	                //[31:0]  hsv_data_in
@@ -430,7 +403,7 @@ else begin		//COLOR_MODE == "HSV"
 	                    //[15:8] green
 	                    //[7:0] blue
 	    );
-
+	    
 		led_driver #(
 		    .number_of_leds(NUMBER_OF_LEDS),
 		    .time_to_delay(REFRESH_DELAY)
